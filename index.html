@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Z CODE SELLER · Smooth Source</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0d0d12;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary-gold: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #aa8000 100%);
+            --text-main: #ffffff;
+            --text-sub: #9ca3af;
+            --accent-red: #ff3b5c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding-bottom: 60px;
+            background-image: radial-gradient(circle at top right, rgba(212, 175, 55, 0.05), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.02), transparent 40%);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
+        }
+
+        .app-header {
+            text-align: center;
+            padding: 25px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, #f3e5ab, #d4af37, #f3e5ab);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            text-transform: uppercase;
+            will-change: transform;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Full width cards — smooth & hardware accelerated */
+        .full-width-card {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.25s;
+            will-change: transform, box-shadow;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .full-width-card:hover {
+            transform: translate3d(0, -3px, 0);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .full-width-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: var(--gold-gradient);
+        }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--primary-gold);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transform: translateZ(0);
+        }
+
+        .card-title i {
+            font-size: 26px;
+            color: var(--primary-gold);
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-sub);
+            margin: 8px 0 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--gold-gradient);
+            color: #000;
+            text-decoration: none;
+            padding: 14px 38px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            margin-top: 18px;
+            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.25s;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            cursor: pointer;
+            border: none;
+            will-change: transform, box-shadow;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .btn:hover {
+            transform: translate3d(0, -3px, 0);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .price-badge {
+            font-size: 32px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            color: var(--primary-gold);
+            margin: 12px 0 5px;
+        }
+
+        /* Grid container — smooth */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-top: 10px;
+        }
+
+        .grid-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 20px 12px 18px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.2s, background 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            will-change: transform, border-color, background;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .grid-item:hover {
+            border-color: var(--primary-gold);
+            transform: translate3d(0, -5px, 0);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .item-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 8px 0 4px;
+            z-index: 2;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .item-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary-gold);
+            z-index: 2;
+            margin: 5px 0 2px;
+        }
+
+        .discount-tag {
+            font-size: 12px;
+            color: var(--accent-red);
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+            background: rgba(255, 59, 92, 0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+            z-index: 2;
+            backdrop-filter: blur(4px);
+            display: inline-block;
+        }
+
+        .strike {
+            text-decoration: line-through;
+            color: var(--text-sub);
+            font-size: 14px;
+            margin-right: 8px;
+            font-weight: 500;
+        }
+
+        .bg-icon {
+            position: absolute;
+            right: -10px;
+            bottom: -15px;
+            font-size: 85px;
+            color: #ffffff;
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+            transform: rotate(-12deg) translateZ(0);
+            will-change: transform;
+        }
+
+        .top-icon {
+            font-size: 120px;
+            bottom: -30px;
+            right: 10px;
+            opacity: 0.15;
+        }
+
+        /* Buy button — smooth interaction */
+        .buy-btn {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            color: var(--primary-gold);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1);
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+            z-index: 3;
+            font-family: 'Montserrat', sans-serif;
+            will-change: background, color, border-color;
+            transform: translateZ(0);
+        }
+
+        .buy-btn:hover {
+            background: var(--primary-gold);
+            color: #000;
+            border-color: var(--primary-gold);
+        }
+
+        /* Modal — smooth and crisp */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            will-change: opacity;
+        }
+
+        .modal-card {
+            background: #18181f;
+            border: 1px solid var(--primary-gold);
+            border-radius: 28px;
+            max-width: 380px;
+            width: 90%;
+            padding: 30px 25px;
+            text-align: center;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.7);
+            position: relative;
+            animation: modalFadeIn 0.2s cubic-bezier(0.2, 0.9, 0.4, 1);
+            transform: translateZ(0);
+            will-change: transform, opacity;
+        }
+
+        @keyframes modalFadeIn {
+            0% { opacity: 0; transform: translateY(15px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-gold);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-message {
+            color: #e0e0e0;
+            margin: 20px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 24px;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.15s;
+            will-change: color;
+        }
+        .modal-close:hover { color: var(--primary-gold); }
+
+        .instagram-link {
+            display: inline-block;
+            margin-top: 15px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: transform 0.2s, opacity 0.2s;
+            border: none;
+            font-size: 15px;
+            will-change: transform;
+        }
+        .instagram-link i { margin-right: 8px; }
+        .instagram-link:hover { transform: scale(1.02); opacity: 0.9; }
+
+        /* Additional smoothness */
+        img, svg { vertical-align: middle; }
+        button, a { -webkit-tap-highlight-color: transparent; }
+        .fa-solid, .fas { font-family: "Font Awesome 6 Free"; font-weight: 900; }
+        .fab { font-family: "Font Awesome 6 Brands"; }
+        .grid-item .fa-regular, .grid-item .fa-solid { font-size: inherit; }
+        .buy-btn i { pointer-events: none; }
+        .full-width-card .btn i { margin-right: 6px; }
+        .card-title i:first-child { margin-right: 4px; }
+    </style>
+</head>
+<body>
+
+    <div class="app-header">
+        Z CODE SELLER
+    </div>
+
+    <div class="container">
+        <!-- TOP CARD 1: Instagram contact (Font Awesome) -->
+        <div class="full-width-card">
+            <i class="fab fa-instagram bg-icon top-icon"></i>
+            <div class="card-title">
+                <i class="fas fa-mobile-alt"></i> 
+                NEED GAMES / APPS?
+            </div>
+            <p class="subtitle">For making any games or apps — contact us on Instagram</p>
+            <p style="font-size: 13px; color: var(--text-sub); margin: 0;">We reply 24/7 · Premium source code</p>
+            <a href="https://www.instagram.com/og.anees?igsh=ZmF6bHNqa3B1enV5" target="_blank" class="btn">
+                <i class="fab fa-instagram" style="margin-right: 8px;"></i>CLICK HERE
+            </a>
+        </div>
+
+        <!-- TOP CARD 2: Z COIN -->
+        <div class="full-width-card">
+            <i class="fas fa-coins bg-icon top-icon"></i>
+            <div class="card-title">
+                <i class="fas fa-bolt"></i> 
+                Z COIN PLATFORM
+            </div>
+            <p class="subtitle">TRY WEBSITE IF YOU WANT — exclusive beta access</p>
+            <div class="price-badge">PRICE ₹3999</div>
+            <a href="https://zcoinearn.vercel.app/" target="_blank" class="btn">
+                <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>CLICK HERE
+            </a>
+        </div>
+
+        <!-- Grid of apps/games (exact pair order, 50% off tags, sorted by price) -->
+        <div class="grid-container" id="dynamicGrid"></div>
+    </div>
+
+    <!-- MODAL (Buy panel) -->
+    <div class="modal-overlay" id="buyModal">
+        <div class="modal-card">
+            <span class="modal-close" id="closeModalBtn">&times;</span>
+            <div class="modal-title">
+                <i class="fas fa-code"></i>
+                BUY SOURCE CODE
+            </div>
+            <div class="modal-message">
+                <strong>IF YOU WANT TO BUY THE CODE</strong><br>
+                then contact us directly on Instagram.<br>
+                <span style="display: block; margin: 15px 0 5px; font-size: 15px; color: #ccc;">
+                    📩 Fast delivery · Payment proof required
+                </span>
+            </div>
+            <a href="https://www.instagram.com/og.anees?igsh=ZmF6bHNqa3B1enV5" target="_blank" class="instagram-link">
+                <i class="fab fa-instagram"></i> CLICK HERE · @og.anees
+            </a>
+            <p style="margin-top: 20px; font-size: 12px; color: #777;">Click outside or press ✕ to close</p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- DATA: UPDATED PRICES (SPINNER, CALCULATOR, TIC TAC TOE → 49, BUBBLE SHOOTER → 99, TAP COIN → 399) ----------
+            const tileData = [
+                { name: "WINGO", price: 799, icon: "fa-gamepad" },
+                { name: "AVIATOR", price: 299, icon: "fa-plane" },
+                { name: "MINES", price: 299, icon: "fa-bomb" },
+                { name: "PLINKO", price: 199, icon: "fa-circle-down" },
+                { name: "ROCKET", price: 299, icon: "fa-rocket" },
+                { name: "LUDO", price: 199, icon: "fa-dice-four" },
+                { name: "CARROM", price: 199, icon: "fa-bullseye" },
+                { name: "POOL", price: 399, icon: "fa-dot-circle" },
+                { name: "CAPTCHA", price: 299, icon: "fa-keyboard" },
+                { name: "TAP COIN", price: 399, icon: "fa-hand-pointer" },        // updated 499 → 399
+                { name: "FLIP COIN", price: 199, icon: "fa-coins" },
+                { name: "SUITCASE", price: 199, icon: "fa-suitcase" },
+                { name: "TIC TAC TOE", price: 49, icon: "fa-times" },              // updated 99 → 49
+                { name: "SNAKE", price: 299, icon: "fa-staff-snake" },
+                { name: "DICE", price: 99, icon: "fa-dice" },
+                { name: "BUBBLE SHOOTER", price: 99, icon: "fa-bowling-ball" },    // updated 299 → 99
+                { name: "CALCULATOR", price: 49, icon: "fa-calculator" },          // updated 99 → 49
+                { name: "BLOCK BLAST", price: 199, icon: "fa-cubes" },
+                { name: "FF TOURNAMENT", price: 399, icon: "fa-trophy" },
+                { name: "CALANDER", price: 49, icon: "fa-calendar-alt" },
+                { name: "APP STORE", price: 199, icon: "fa-store" },
+                { name: "MUSIC APP", price: 199, icon: "fa-music" },
+                { name: "MOVIE APP", price: 199, icon: "fa-film" },
+                { name: "SPINNER", price: 49, icon: "fa-sync" },                   // updated 99 → 49
+                { name: "FRUIT NINJA", price: 99, icon: "fa-apple-alt" },
+                { name: "WINGO 30 SEC", price: 249, icon: "fa-stopwatch" },
+                { name: "CHAT APP", price: 299, icon: "fa-comments" },
+                { name: "CHAT GPT CLONE", price: 299, icon: "fa-robot" },
+                { name: "WINGO 1 MIN", price: 249, icon: "fa-clock" },
+                { name: "WINGO 3 MIN", price: 249, icon: "fa-clock" },
+                { name: "WINGO 5 MIN", price: 249, icon: "fa-clock" }
+            ];
+
+            // Process each tile: add 50% OFF (original = price*2)
+            const processedTiles = tileData.map(item => {
+                const listedPrice = item.price;
+                const originalPrice = listedPrice * 2;
+                return {
+                    ...item,
+                    original: originalPrice,
+                    finalPrice: listedPrice,
+                    discount: "50% OFF"
+                };
+            });
+
+            // Sort ascending by final price (lowest first)
+            processedTiles.sort((a, b) => a.finalPrice - b.finalPrice);
+
+            // Render grid
+            const grid = document.getElementById('dynamicGrid');
+            grid.innerHTML = '';
+
+            processedTiles.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'grid-item';
+
+                const priceHTML = `
+                    <div class="discount-tag">${item.discount}</div>
+                    <div class="item-price">
+                        <span class="strike">₹${item.original}</span> ₹${item.finalPrice}
+                    </div>
+                `;
+
+                const iconClass = item.icon ? `fa-solid ${item.icon}` : 'fa-solid fa-cube';
+
+                card.innerHTML = `
+                    <i class="${iconClass} bg-icon"></i>
+                    <div class="item-name">${item.name}</div>
+                    ${priceHTML}
+                    <button class="buy-btn"><i class="fas fa-shopping-cart" style="margin-right: 6px;"></i>BUY NOW</button>
+                `;
+                grid.appendChild(card);
+            });
+
+            // ----- MODAL LOGIC (smooth & efficient) -----
+            const modalOverlay = document.getElementById('buyModal');
+            const closeBtn = document.getElementById('closeModalBtn');
+
+            function openModal() {
+                modalOverlay.style.display = 'flex';
+            }
+            function closeModal() {
+                modalOverlay.style.display = 'none';
+            }
+
+            // Use event delegation for performance
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.buy-btn')) {
+                    e.preventDefault();
+                    openModal();
+                }
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+
+            window.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
+                    closeModal();
+                }
+            });
+
+            // Preconnect for faster font loading
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = 'https://fonts.googleapis.com';
+            document.head.appendChild(link);
+            const link2 = document.createElement('link');
+            link2.rel = 'preconnect';
+            link2.href = 'https://fonts.gstatic.com';
+            link2.crossOrigin = '';
+            document.head.appendChild(link2);
+        })();
+    </script>
+</body>
+</html>
