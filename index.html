@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Z CODE SELLER · Smooth Source</title>
-    <!-- Fonts & Icons -->
+    <title>Z CODE SELLER · Premium Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -17,6 +16,7 @@
             --text-main: #ffffff;
             --text-sub: #9ca3af;
             --accent-red: #ff3b5c;
+            --bottom-nav-height: 70px;
         }
 
         * {
@@ -29,18 +29,18 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            padding-bottom: 60px;
             background-image: radial-gradient(circle at top right, rgba(212, 175, 55, 0.05), transparent 40%),
                               radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.02), transparent 40%);
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeSpeed;
+            padding-bottom: var(--bottom-nav-height);
         }
 
         .app-header {
             text-align: center;
-            padding: 25px 0;
+            padding: 25px 0 10px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
             font-size: 28px;
@@ -48,11 +48,7 @@
             background: linear-gradient(90deg, #f3e5ab, #d4af37, #f3e5ab);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            margin-bottom: 30px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
             text-transform: uppercase;
-            will-change: transform;
         }
 
         .container {
@@ -61,7 +57,68 @@
             padding: 0 20px;
         }
 
-        /* Full width cards — smooth & hardware accelerated */
+        .selection-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            gap: 30px;
+        }
+
+        .choice-card {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 30px 20px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transition: transform 0.25s cubic-bezier(0.2,0.9,0.4,1), border-color 0.25s;
+            will-change: transform;
+            transform: translate3d(0,0,0);
+        }
+
+        .choice-card:hover {
+            transform: translate3d(0,-4px,0);
+            border-color: var(--primary-gold);
+        }
+
+        .choice-card .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-gold);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .go-btn {
+            background: var(--gold-gradient);
+            border: none;
+            color: #000;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            padding: 14px 45px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.25s;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 18px rgba(212,175,55,0.4);
+            text-transform: uppercase;
+        }
+
+        .go-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(212,175,55,0.6);
+        }
+
         .full-width-card {
             width: 100%;
             background: var(--card-bg);
@@ -73,16 +130,14 @@
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.25s;
-            will-change: transform, box-shadow;
-            transform: translate3d(0, 0, 0);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transition: transform 0.25s cubic-bezier(0.2,0.9,0.4,1);
+            will-change: transform;
+            transform: translate3d(0,0,0);
         }
 
         .full-width-card:hover {
-            transform: translate3d(0, -3px, 0);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            transform: translate3d(0,-3px,0);
         }
 
         .full-width-card::before {
@@ -96,19 +151,12 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 22px;
             font-weight: 700;
-            margin-bottom: 6px;
             color: var(--primary-gold);
             letter-spacing: 1px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transform: translateZ(0);
-        }
-
-        .card-title i {
-            font-size: 26px;
-            color: var(--primary-gold);
         }
 
         .subtitle {
@@ -128,19 +176,17 @@
             font-weight: 800;
             font-size: 14px;
             margin-top: 18px;
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.25s;
+            transition: all 0.25s;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 15px rgba(212,175,55,0.3);
             cursor: pointer;
             border: none;
-            will-change: transform, box-shadow;
-            transform: translate3d(0, 0, 0);
         }
 
         .btn:hover {
-            transform: translate3d(0, -3px, 0);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212,175,55,0.5);
         }
 
         .price-badge {
@@ -151,7 +197,25 @@
             margin: 12px 0 5px;
         }
 
-        /* Grid container — smooth */
+        .bg-icon {
+            position: absolute;
+            right: -10px;
+            bottom: -15px;
+            font-size: 85px;
+            color: #ffffff;
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+            transform: rotate(-12deg);
+        }
+
+        .top-icon {
+            font-size: 120px;
+            bottom: -30px;
+            right: 10px;
+            opacity: 0.15;
+        }
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -168,25 +232,24 @@
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.2s, background 0.2s;
+            transition: transform 0.2s cubic-bezier(0.23,1,0.32,1), border-color 0.2s;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            will-change: transform, border-color, background;
-            transform: translate3d(0, 0, 0);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            will-change: transform;
+            transform: translate3d(0,0,0);
         }
 
         .grid-item:hover {
             border-color: var(--primary-gold);
-            transform: translate3d(0, -5px, 0);
-            background: rgba(255, 255, 255, 0.07);
+            transform: translate3d(0,-5px,0);
+            background: rgba(255,255,255,0.07);
         }
 
         .item-name {
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             margin: 8px 0 4px;
             z-index: 2;
@@ -208,12 +271,11 @@
             font-weight: 800;
             margin-bottom: 6px;
             letter-spacing: 1px;
-            background: rgba(255, 59, 92, 0.15);
+            background: rgba(255,59,92,0.15);
             padding: 4px 10px;
             border-radius: 20px;
             z-index: 2;
             backdrop-filter: blur(4px);
-            display: inline-block;
         }
 
         .strike {
@@ -224,65 +286,83 @@
             font-weight: 500;
         }
 
-        .bg-icon {
-            position: absolute;
-            right: -10px;
-            bottom: -15px;
-            font-size: 85px;
-            color: #ffffff;
-            opacity: 0.12;
-            pointer-events: none;
-            z-index: 0;
-            transform: rotate(-12deg) translateZ(0);
-            will-change: transform;
-        }
-
-        .top-icon {
-            font-size: 120px;
-            bottom: -30px;
-            right: 10px;
-            opacity: 0.15;
-        }
-
-        /* Buy button — smooth interaction */
-        .buy-btn {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.5);
+        .action-btn {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.6);
             color: var(--primary-gold);
-            padding: 8px 18px;
+            padding: 10px 22px;
             border-radius: 40px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             letter-spacing: 1px;
-            margin-top: 12px;
+            margin-top: 15px;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1);
+            transition: all 0.2s;
             text-transform: uppercase;
             backdrop-filter: blur(5px);
             z-index: 3;
             font-family: 'Montserrat', sans-serif;
-            will-change: background, color, border-color;
-            transform: translateZ(0);
         }
 
-        .buy-btn:hover {
+        .action-btn:hover {
             background: var(--primary-gold);
             color: #000;
             border-color: var(--primary-gold);
         }
 
-        /* Modal — smooth and crisp */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: var(--bottom-nav-height);
+            background: rgba(20, 20, 28, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            z-index: 999;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid rgba(212,175,55,0.4);
+            color: var(--primary-gold);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 10px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-btn.active {
+            background: var(--gold-gradient);
+            color: #000;
+            border-color: var(--primary-gold);
+            box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+        }
+
+        .nav-btn:hover {
+            background: rgba(212,175,55,0.15);
+            border-color: var(--primary-gold);
+        }
+
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8);
             backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            will-change: opacity;
         }
 
         .modal-card {
@@ -294,34 +374,12 @@
             padding: 30px 25px;
             text-align: center;
             box-shadow: 0 30px 50px rgba(0,0,0,0.7);
-            position: relative;
-            animation: modalFadeIn 0.2s cubic-bezier(0.2, 0.9, 0.4, 1);
-            transform: translateZ(0);
-            will-change: transform, opacity;
+            animation: modalFadeIn 0.2s ease;
         }
 
         @keyframes modalFadeIn {
-            0% { opacity: 0; transform: translateY(15px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .modal-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--primary-gold);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .modal-message {
-            color: #e0e0e0;
-            margin: 20px 0;
-            font-size: 16px;
-            line-height: 1.5;
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-close {
@@ -330,10 +388,7 @@
             font-size: 24px;
             color: #aaa;
             cursor: pointer;
-            transition: color 0.15s;
-            will-change: color;
         }
-        .modal-close:hover { color: var(--primary-gold); }
 
         .instagram-link {
             display: inline-block;
@@ -344,90 +399,124 @@
             border-radius: 50px;
             text-decoration: none;
             font-weight: 700;
-            letter-spacing: 1px;
-            transition: transform 0.2s, opacity 0.2s;
-            border: none;
-            font-size: 15px;
-            will-change: transform;
+            transition: 0.2s;
         }
-        .instagram-link i { margin-right: 8px; }
-        .instagram-link:hover { transform: scale(1.02); opacity: 0.9; }
 
-        /* Additional smoothness */
-        img, svg { vertical-align: middle; }
-        button, a { -webkit-tap-highlight-color: transparent; }
-        .fa-solid, .fas { font-family: "Font Awesome 6 Free"; font-weight: 900; }
-        .fab { font-family: "Font Awesome 6 Brands"; }
-        .grid-item .fa-regular, .grid-item .fa-solid { font-size: inherit; }
-        .buy-btn i { pointer-events: none; }
-        .full-width-card .btn i { margin-right: 6px; }
-        .card-title i:first-child { margin-right: 4px; }
+        .instagram-link i { margin-right: 8px; }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
 
-    <div class="app-header">
-        Z CODE SELLER
+    <div id="selectionScreen" class="selection-screen container">
+        <div class="choice-card">
+            <div class="card-title">
+                <i class="fas fa-shield-alt"></i> NEED FF PANEL & PUSHER
+            </div>
+            <button class="go-btn" data-target="home">GO <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="choice-card">
+            <div class="card-title">
+                <i class="fas fa-code"></i> NEED GAMES CODES
+            </div>
+            <button class="go-btn" data-target="codes">GO <i class="fas fa-arrow-right"></i></button>
+        </div>
     </div>
 
-    <div class="container">
-        <!-- TOP CARD 1: Instagram contact (Font Awesome) -->
-        <div class="full-width-card">
-            <i class="fab fa-instagram bg-icon top-icon"></i>
-            <div class="card-title">
-                <i class="fas fa-mobile-alt"></i> 
-                NEED GAMES / APPS?
+    <div id="mainApp" class="hidden">
+        <div class="app-header">Z CODE SELLER</div>
+
+        <div id="homeContent" class="container">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <i class="fas fa-gamepad bg-icon"></i>
+                    <div class="item-name">FF PANEL</div>
+                    <div class="item-price">₹49</div>
+                    <button class="action-btn buy-trigger">BUY</button>
+                </div>
+                <div class="grid-item">
+                    <i class="fas fa-sliders-h bg-icon"></i>
+                    <div class="item-name">FF SENSITIVITY</div>
+                    <div class="item-price">₹99</div>
+                    <button class="action-btn buy-trigger">BUY</button>
+                </div>
+                <div class="grid-item">
+                    <i class="fas fa-crosshairs bg-icon"></i>
+                    <div class="item-name">FF SENSITIVITY</div>
+                    <div class="item-price">₹49</div>
+                    <button class="action-btn buy-trigger">BUY</button>
+                </div>
+                <div class="grid-item">
+                    <i class="fas fa-map-pin bg-icon"></i>
+                    <div class="item-name">ZONE PUSHER</div>
+                    <div class="item-price" style="font-size:16px;">₹20 / GAME</div>
+                    <button class="action-btn buy-trigger">CONTACT</button>
+                </div>
+                <div class="grid-item">
+                    <i class="fas fa-id-card bg-icon"></i>
+                    <div class="item-name">FF BIO CODES</div>
+                    <div class="item-price">₹49</div>
+                    <button class="action-btn buy-trigger">BUY</button>
+                </div>
             </div>
-            <p class="subtitle">For making any games or apps — contact us on Instagram</p>
-            <p style="font-size: 13px; color: var(--text-sub); margin: 0;">We reply 24/7 · Premium source code</p>
-            <a href="https://www.instagram.com/og.anees?igsh=ZmF6bHNqa3B1enV5" target="_blank" class="btn">
-                <i class="fab fa-instagram" style="margin-right: 8px;"></i>CLICK HERE
-            </a>
         </div>
 
-        <!-- TOP CARD 2: Z COIN -->
-        <div class="full-width-card">
-            <i class="fas fa-coins bg-icon top-icon"></i>
-            <div class="card-title">
-                <i class="fas fa-bolt"></i> 
-                Z COIN PLATFORM
+        <div id="codesContent" class="container hidden">
+            <div class="full-width-card">
+                <i class="fab fa-instagram bg-icon top-icon"></i>
+                <div class="card-title"><i class="fas fa-mobile-alt"></i> NEED GAMES / APPS?</div>
+                <p class="subtitle">For making any games or apps — contact us on Instagram</p>
+                <p style="font-size:13px; color:var(--text-sub); margin:0;">We reply 24/7 · Premium source code</p>
+                <a href="https://www.instagram.com/zcode.ai?igsh=enBsbzd0c2lyNjNu" target="_blank" class="btn">
+                    <i class="fab fa-instagram" style="margin-right:8px;"></i>CLICK HERE
+                </a>
             </div>
-            <p class="subtitle">TRY WEBSITE IF YOU WANT — exclusive beta access</p>
-            <div class="price-badge">PRICE ₹3999</div>
-            <a href="https://zcoinearn.vercel.app/" target="_blank" class="btn">
-                <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i>CLICK HERE
-            </a>
+            <div class="full-width-card">
+                <i class="fas fa-coins bg-icon top-icon"></i>
+                <div class="card-title"><i class="fas fa-bolt"></i> Z COIN PLATFORM</div>
+                <p class="subtitle">TRY WEBSITE IF YOU WANT — exclusive beta access</p>
+                <div class="price-badge">PRICE ₹3999</div>
+                <a href="https://zcoinearn.vercel.app/" target="_blank" class="btn">
+                    <i class="fas fa-external-link-alt" style="margin-right:8px;"></i>CLICK HERE
+                </a>
+            </div>
+            <div class="grid-container" id="dynamicCodesGrid"></div>
         </div>
 
-        <!-- Grid of apps/games (exact pair order, 50% off tags, sorted by price) -->
-        <div class="grid-container" id="dynamicGrid"></div>
+        <div class="bottom-nav">
+            <button class="nav-btn active" id="navHome">HOME</button>
+            <button class="nav-btn" id="navCodes">CODES</button>
+        </div>
     </div>
 
-    <!-- MODAL (Buy panel) -->
     <div class="modal-overlay" id="buyModal">
         <div class="modal-card">
             <span class="modal-close" id="closeModalBtn">&times;</span>
-            <div class="modal-title">
-                <i class="fas fa-code"></i>
-                BUY SOURCE CODE
+            <div style="font-size:22px; font-weight:800; color:var(--primary-gold); margin-bottom:15px;">
+                <i class="fas fa-shopping-cart"></i> READY TO PURCHASE?
             </div>
-            <div class="modal-message">
-                <strong>IF YOU WANT TO BUY THE CODE</strong><br>
-                then contact us directly on Instagram.<br>
-                <span style="display: block; margin: 15px 0 5px; font-size: 15px; color: #ccc;">
-                    📩 Fast delivery · Payment proof required
-                </span>
-            </div>
-            <a href="https://www.instagram.com/og.anees?igsh=ZmF6bHNqa3B1enV5" target="_blank" class="instagram-link">
-                <i class="fab fa-instagram"></i> CLICK HERE · @og.anees
+            <p style="color:#ccc; margin:15px 0;">Contact us on Instagram to get your code or service.</p>
+            <a href="https://www.instagram.com/zcode.ai?igsh=enBsbzd0c2lyNjNu" target="_blank" class="instagram-link">
+                <i class="fab fa-instagram"></i> @zcode.ai
             </a>
-            <p style="margin-top: 20px; font-size: 12px; color: #777;">Click outside or press ✕ to close</p>
+            <p style="margin-top:20px; font-size:12px; color:#777;">Click outside or press ✕ to close</p>
         </div>
     </div>
 
     <script>
         (function() {
-            // ---------- DATA: UPDATED PRICES (SPINNER, CALCULATOR, TIC TAC TOE → 49, BUBBLE SHOOTER → 99, TAP COIN → 399) ----------
+            const selectionScreen = document.getElementById('selectionScreen');
+            const mainApp = document.getElementById('mainApp');
+            const homeContent = document.getElementById('homeContent');
+            const codesContent = document.getElementById('codesContent');
+            const navHome = document.getElementById('navHome');
+            const navCodes = document.getElementById('navCodes');
+            const modalOverlay = document.getElementById('buyModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
             const tileData = [
                 { name: "WINGO", price: 799, icon: "fa-gamepad" },
                 { name: "AVIATOR", price: 299, icon: "fa-plane" },
@@ -438,21 +527,21 @@
                 { name: "CARROM", price: 199, icon: "fa-bullseye" },
                 { name: "POOL", price: 399, icon: "fa-dot-circle" },
                 { name: "CAPTCHA", price: 299, icon: "fa-keyboard" },
-                { name: "TAP COIN", price: 399, icon: "fa-hand-pointer" },        // updated 499 → 399
+                { name: "TAP COIN", price: 399, icon: "fa-hand-pointer" },
                 { name: "FLIP COIN", price: 199, icon: "fa-coins" },
                 { name: "SUITCASE", price: 199, icon: "fa-suitcase" },
-                { name: "TIC TAC TOE", price: 49, icon: "fa-times" },              // updated 99 → 49
+                { name: "TIC TAC TOE", price: 49, icon: "fa-times" },
                 { name: "SNAKE", price: 299, icon: "fa-staff-snake" },
                 { name: "DICE", price: 99, icon: "fa-dice" },
-                { name: "BUBBLE SHOOTER", price: 99, icon: "fa-bowling-ball" },    // updated 299 → 99
-                { name: "CALCULATOR", price: 49, icon: "fa-calculator" },          // updated 99 → 49
+                { name: "BUBBLE SHOOTER", price: 99, icon: "fa-bowling-ball" },
+                { name: "CALCULATOR", price: 49, icon: "fa-calculator" },
                 { name: "BLOCK BLAST", price: 199, icon: "fa-cubes" },
                 { name: "FF TOURNAMENT", price: 399, icon: "fa-trophy" },
                 { name: "CALANDER", price: 49, icon: "fa-calendar-alt" },
                 { name: "APP STORE", price: 199, icon: "fa-store" },
                 { name: "MUSIC APP", price: 199, icon: "fa-music" },
                 { name: "MOVIE APP", price: 199, icon: "fa-film" },
-                { name: "SPINNER", price: 49, icon: "fa-sync" },                   // updated 99 → 49
+                { name: "SPINNER", price: 49, icon: "fa-sync" },
                 { name: "FRUIT NINJA", price: 99, icon: "fa-apple-alt" },
                 { name: "WINGO 30 SEC", price: 249, icon: "fa-stopwatch" },
                 { name: "CHAT APP", price: 299, icon: "fa-comments" },
@@ -462,89 +551,80 @@
                 { name: "WINGO 5 MIN", price: 249, icon: "fa-clock" }
             ];
 
-            // Process each tile: add 50% OFF (original = price*2)
-            const processedTiles = tileData.map(item => {
-                const listedPrice = item.price;
-                const originalPrice = listedPrice * 2;
-                return {
+            function renderCodesGrid() {
+                const grid = document.getElementById('dynamicCodesGrid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                const processed = tileData.map(item => ({
                     ...item,
-                    original: originalPrice,
-                    finalPrice: listedPrice,
+                    original: item.price * 2,
+                    finalPrice: item.price,
                     discount: "50% OFF"
-                };
-            });
-
-            // Sort ascending by final price (lowest first)
-            processedTiles.sort((a, b) => a.finalPrice - b.finalPrice);
-
-            // Render grid
-            const grid = document.getElementById('dynamicGrid');
-            grid.innerHTML = '';
-
-            processedTiles.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'grid-item';
-
-                const priceHTML = `
-                    <div class="discount-tag">${item.discount}</div>
-                    <div class="item-price">
-                        <span class="strike">₹${item.original}</span> ₹${item.finalPrice}
-                    </div>
-                `;
-
-                const iconClass = item.icon ? `fa-solid ${item.icon}` : 'fa-solid fa-cube';
-
-                card.innerHTML = `
-                    <i class="${iconClass} bg-icon"></i>
-                    <div class="item-name">${item.name}</div>
-                    ${priceHTML}
-                    <button class="buy-btn"><i class="fas fa-shopping-cart" style="margin-right: 6px;"></i>BUY NOW</button>
-                `;
-                grid.appendChild(card);
-            });
-
-            // ----- MODAL LOGIC (smooth & efficient) -----
-            const modalOverlay = document.getElementById('buyModal');
-            const closeBtn = document.getElementById('closeModalBtn');
-
-            function openModal() {
-                modalOverlay.style.display = 'flex';
-            }
-            function closeModal() {
-                modalOverlay.style.display = 'none';
+                }));
+                processed.sort((a,b) => a.finalPrice - b.finalPrice);
+                processed.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'grid-item';
+                    card.innerHTML = `
+                        <i class="fa-solid ${item.icon} bg-icon"></i>
+                        <div class="item-name">${item.name}</div>
+                        <div class="discount-tag">${item.discount}</div>
+                        <div class="item-price"><span class="strike">₹${item.original}</span> ₹${item.finalPrice}</div>
+                        <button class="action-btn buy-trigger">BUY</button>
+                    `;
+                    grid.appendChild(card);
+                });
             }
 
-            // Use event delegation for performance
+            function setActivePage(page) {
+                if (page === 'home') {
+                    homeContent.classList.remove('hidden');
+                    codesContent.classList.add('hidden');
+                    navHome.classList.add('active');
+                    navCodes.classList.remove('active');
+                } else {
+                    codesContent.classList.remove('hidden');
+                    homeContent.classList.add('hidden');
+                    navHome.classList.remove('active');
+                    navCodes.classList.add('active');
+                }
+            }
+
+            function startApp(initialPage) {
+                selectionScreen.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+                renderCodesGrid();
+                setActivePage(initialPage);
+            }
+
+            document.querySelectorAll('.go-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    startApp(this.dataset.target);
+                });
+            });
+
+            navHome.addEventListener('click', () => setActivePage('home'));
+            navCodes.addEventListener('click', () => setActivePage('codes'));
+
             document.addEventListener('click', function(e) {
-                if (e.target.closest('.buy-btn')) {
+                if (e.target.closest('.buy-trigger')) {
                     e.preventDefault();
-                    openModal();
+                    modalOverlay.style.display = 'flex';
                 }
             });
 
-            closeBtn.addEventListener('click', closeModal);
+            closeModalBtn.addEventListener('click', () => modalOverlay.style.display = 'none');
             modalOverlay.addEventListener('click', function(e) {
-                if (e.target === modalOverlay) {
-                    closeModal();
-                }
+                if (e.target === modalOverlay) modalOverlay.style.display = 'none';
             });
-
             window.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
-                    closeModal();
+                    modalOverlay.style.display = 'none';
                 }
             });
 
-            // Preconnect for faster font loading
-            const link = document.createElement('link');
-            link.rel = 'preconnect';
-            link.href = 'https://fonts.googleapis.com';
-            document.head.appendChild(link);
-            const link2 = document.createElement('link');
-            link2.rel = 'preconnect';
-            link2.href = 'https://fonts.gstatic.com';
-            link2.crossOrigin = '';
-            document.head.appendChild(link2);
+            const link = document.createElement('link'); link.rel = 'preconnect'; link.href = 'https://fonts.googleapis.com'; document.head.appendChild(link);
+            const link2 = document.createElement('link'); link2.rel = 'preconnect'; link2.href = 'https://fonts.gstatic.com'; link2.crossOrigin = ''; document.head.appendChild(link2);
         })();
     </script>
 </body>
