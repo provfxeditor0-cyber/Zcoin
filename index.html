@@ -2,630 +2,454 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Z CODE SELLER · Premium Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bubble Shooter Premium</title>
     <style>
-        :root {
-            --bg-dark: #0d0d12;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --primary-gold: #d4af37;
-            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #aa8000 100%);
-            --text-main: #ffffff;
-            --text-sub: #9ca3af;
-            --accent-red: #ff3b5c;
-            --bottom-nav-height: 70px;
-        }
-
-        * {
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+        
+        body {
             margin: 0;
             padding: 0;
+            background-color: #003366; /* Dark blue background for desktop borders */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Fredoka One', sans-serif;
+            touch-action: none;
+            user-select: none;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            background-image: radial-gradient(circle at top right, rgba(212, 175, 55, 0.05), transparent 40%),
-                              radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.02), transparent 40%);
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeSpeed;
-            padding-bottom: var(--bottom-nav-height);
+        /* Responsive Cabinet for Desktop */
+        #game-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 500px; /* Limits width on desktop */
+            aspect-ratio: 9 / 16;
+            background: #aae0ff;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .app-header {
-            text-align: center;
-            padding: 25px 0 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 28px;
-            letter-spacing: 4px;
-            background: linear-gradient(90deg, #f3e5ab, #d4af37, #f3e5ab);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
         }
 
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .selection-screen {
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 80vh;
-            gap: 30px;
-        }
-
-        .choice-card {
-            width: 100%;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 30px 20px;
-            text-align: center;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            transition: transform 0.25s cubic-bezier(0.2,0.9,0.4,1), border-color 0.25s;
-            will-change: transform;
-            transform: translate3d(0,0,0);
-        }
-
-        .choice-card:hover {
-            transform: translate3d(0,-4px,0);
-            border-color: var(--primary-gold);
-        }
-
-        .choice-card .card-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--primary-gold);
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 12px;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        .go-btn {
-            background: var(--gold-gradient);
-            border: none;
-            color: #000;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 16px;
-            padding: 14px 45px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.25s;
-            letter-spacing: 2px;
-            box-shadow: 0 6px 18px rgba(212,175,55,0.4);
-            text-transform: uppercase;
-        }
-
-        .go-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px rgba(212,175,55,0.6);
-        }
-
-        .full-width-card {
-            width: 100%;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 25px 20px;
-            margin-bottom: 25px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            transition: transform 0.25s cubic-bezier(0.2,0.9,0.4,1);
-            will-change: transform;
-            transform: translate3d(0,0,0);
-        }
-
-        .full-width-card:hover {
-            transform: translate3d(0,-3px,0);
-        }
-
-        .full-width-card::before {
-            content: '';
+        /* Top HUD */
+        #hud {
             position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
-            background: var(--gold-gradient);
-        }
-
-        .card-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--primary-gold);
-            letter-spacing: 1px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 20px;
+            box-sizing: border-box;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            justify-content: space-between;
+            pointer-events: none;
         }
 
-        .subtitle {
-            font-size: 14px;
-            color: var(--text-sub);
-            margin: 8px 0 5px;
+        .score-box {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 5px 20px;
+            color: white;
+            font-size: clamp(18px, 4vw, 24px);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Menus */
+        .menu-overlay {
+            background: rgba(13, 71, 161, 0.6);
+            backdrop-filter: blur(12px);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-overlay h1 {
+            margin: 0 0 20px 0;
+            font-size: clamp(30px, 8vw, 50px);
+            line-height: 1.1;
+            text-align: center;
+            color: white;
+            text-shadow: 0 6px 0 rgba(0,0,0,0.2);
+            letter-spacing: 2px;
         }
 
         .btn {
-            display: inline-block;
-            background: var(--gold-gradient);
-            color: #000;
-            text-decoration: none;
-            padding: 14px 38px;
+            font-family: 'Fredoka One', sans-serif;
+            font-size: clamp(18px, 5vw, 28px);
+            padding: 12px 40px;
             border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 14px;
-            margin-top: 18px;
-            transition: all 0.25s;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 4px 15px rgba(212,175,55,0.3);
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(212,175,55,0.5);
-        }
-
-        .price-badge {
-            font-size: 32px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            color: var(--primary-gold);
-            margin: 12px 0 5px;
-        }
-
-        .bg-icon {
-            position: absolute;
-            right: -10px;
-            bottom: -15px;
-            font-size: 85px;
-            color: #ffffff;
-            opacity: 0.12;
-            pointer-events: none;
-            z-index: 0;
-            transform: rotate(-12deg);
-        }
-
-        .top-icon {
-            font-size: 120px;
-            bottom: -30px;
-            right: 10px;
-            opacity: 0.15;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-            margin-top: 10px;
-        }
-
-        .grid-item {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 20px 12px 18px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            transition: transform 0.2s cubic-bezier(0.23,1,0.32,1), border-color 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            will-change: transform;
-            transform: translate3d(0,0,0);
-        }
-
-        .grid-item:hover {
-            border-color: var(--primary-gold);
-            transform: translate3d(0,-5px,0);
-            background: rgba(255,255,255,0.07);
-        }
-
-        .item-name {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            margin: 8px 0 4px;
-            z-index: 2;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .item-price {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--primary-gold);
-            z-index: 2;
-            margin: 5px 0 2px;
-        }
-
-        .discount-tag {
-            font-size: 12px;
-            color: var(--accent-red);
-            font-weight: 800;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-            background: rgba(255,59,92,0.15);
-            padding: 4px 10px;
-            border-radius: 20px;
-            z-index: 2;
-            backdrop-filter: blur(4px);
-        }
-
-        .strike {
-            text-decoration: line-through;
-            color: var(--text-sub);
-            font-size: 14px;
-            margin-right: 8px;
-            font-weight: 500;
-        }
-
-        .action-btn {
-            background: rgba(212,175,55,0.1);
-            border: 1px solid rgba(212,175,55,0.6);
-            color: var(--primary-gold);
-            padding: 10px 22px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-top: 15px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-transform: uppercase;
-            backdrop-filter: blur(5px);
-            z-index: 3;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .action-btn:hover {
-            background: var(--primary-gold);
-            color: #000;
-            border-color: var(--primary-gold);
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: var(--bottom-nav-height);
-            background: rgba(20, 20, 28, 0.95);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            z-index: 999;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: 1px solid rgba(212,175,55,0.4);
-            color: var(--primary-gold);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 15px;
-            padding: 10px 35px;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            backdrop-filter: blur(4px);
-        }
-
-        .nav-btn.active {
-            background: var(--gold-gradient);
-            color: #000;
-            border-color: var(--primary-gold);
-            box-shadow: 0 4px 12px rgba(212,175,55,0.3);
-        }
-
-        .nav-btn:hover {
-            background: rgba(212,175,55,0.15);
-            border-color: var(--primary-gold);
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(6px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-card {
-            background: #18181f;
-            border: 1px solid var(--primary-gold);
-            border-radius: 28px;
-            max-width: 380px;
-            width: 90%;
-            padding: 30px 25px;
-            text-align: center;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.7);
-            animation: modalFadeIn 0.2s ease;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 24px;
-            color: #aaa;
-            cursor: pointer;
-        }
-
-        .instagram-link {
-            display: inline-block;
-            margin-top: 15px;
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            border: 4px solid white;
+            background: linear-gradient(to bottom, #FFDD00, #FFAA00);
             color: white;
-            padding: 12px 28px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: 0.2s;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 8px 0px #b37700;
+            transition: all 0.1s ease;
+        }
+        
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0px #b37700;
         }
 
-        .instagram-link i { margin-right: 8px; }
-
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
+    <div id="game-wrapper">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-layer">
+            <div id="hud" class="hidden">
+                <div class="score-box" id="score-display">0</div>
+            </div>
+            
+            <div id="start-menu" class="menu-overlay">
+                <h1>POP ALL THE<br>BUBBLES</h1>
+                <button class="btn" onclick="startGame()">PLAY</button>
+            </div>
 
-    <div id="selectionScreen" class="selection-screen container">
-        <div class="choice-card">
-            <div class="card-title">
-                <i class="fas fa-shield-alt"></i> NEED FF PANEL & PUSHER
+            <div id="gameover-menu" class="menu-overlay hidden">
+                <h1 style="color: #ff4444;">GAME OVER</h1>
+                <p id="final-score" style="font-size: 32px; color: white; margin-bottom: 30px;"></p>
+                <button class="btn" onclick="startGame()">TRY AGAIN</button>
             </div>
-            <button class="go-btn" data-target="home">GO <i class="fas fa-arrow-right"></i></button>
-        </div>
-        <div class="choice-card">
-            <div class="card-title">
-                <i class="fas fa-code"></i> NEED GAMES CODES
-            </div>
-            <button class="go-btn" data-target="codes">GO <i class="fas fa-arrow-right"></i></button>
         </div>
     </div>
 
-    <div id="mainApp" class="hidden">
-        <div class="app-header">Z CODE SELLER</div>
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d', { alpha: false });
+    const wrapper = document.getElementById('game-wrapper');
+    
+    const startMenu = document.getElementById('start-menu');
+    const gameoverMenu = document.getElementById('gameover-menu');
+    const hud = document.getElementById('hud');
+    const scoreDisplay = document.getElementById('score-display');
+    const finalScoreEl = document.getElementById('final-score');
 
-        <div id="homeContent" class="container">
-            <div class="grid-container">
-                <div class="grid-item">
-                    <i class="fas fa-gamepad bg-icon"></i>
-                    <div class="item-name">FF PANEL</div>
-                    <div class="item-price">₹49</div>
-                    <button class="action-btn buy-trigger">BUY</button>
-                </div>
-                <div class="grid-item">
-                    <i class="fas fa-sliders-h bg-icon"></i>
-                    <div class="item-name">FF SENSITIVITY</div>
-                    <div class="item-price">₹99</div>
-                    <button class="action-btn buy-trigger">BUY</button>
-                </div>
-                <div class="grid-item">
-                    <i class="fas fa-crosshairs bg-icon"></i>
-                    <div class="item-name">FF SENSITIVITY</div>
-                    <div class="item-price">₹49</div>
-                    <button class="action-btn buy-trigger">BUY</button>
-                </div>
-                <div class="grid-item">
-                    <i class="fas fa-map-pin bg-icon"></i>
-                    <div class="item-name">ZONE PUSHER</div>
-                    <div class="item-price" style="font-size:16px;">₹20 / GAME</div>
-                    <button class="action-btn buy-trigger">CONTACT</button>
-                </div>
-                <div class="grid-item">
-                    <i class="fas fa-id-card bg-icon"></i>
-                    <div class="item-name">FF BIO CODES</div>
-                    <div class="item-price">₹49</div>
-                    <button class="action-btn buy-trigger">BUY</button>
-                </div>
-            </div>
-        </div>
+    let COLS = 11; 
+    let ROWS = 16;
+    let BUBBLE_R = 0; 
+    let ROW_HEIGHT = 0;
+    
+    const COLORS = ['#00D000', '#0044EE', '#E52B22', '#9900DD', '#FFDD00'];
+    const STONE_COLOR = '#A0A0B0';
 
-        <div id="codesContent" class="container hidden">
-            <div class="full-width-card">
-                <i class="fab fa-instagram bg-icon top-icon"></i>
-                <div class="card-title"><i class="fas fa-mobile-alt"></i> NEED GAMES / APPS?</div>
-                <p class="subtitle">For making any games or apps — contact us on Instagram</p>
-                <p style="font-size:13px; color:var(--text-sub); margin:0;">We reply 24/7 · Premium source code</p>
-                <a href="https://www.instagram.com/zcode.ai?igsh=enBsbzd0c2lyNjNu" target="_blank" class="btn">
-                    <i class="fab fa-instagram" style="margin-right:8px;"></i>CLICK HERE
-                </a>
-            </div>
-            <div class="full-width-card">
-                <i class="fas fa-coins bg-icon top-icon"></i>
-                <div class="card-title"><i class="fas fa-bolt"></i> Z COIN PLATFORM</div>
-                <p class="subtitle">TRY WEBSITE IF YOU WANT — exclusive beta access</p>
-                <div class="price-badge">PRICE ₹3999</div>
-                <a href="https://zcoinearn.vercel.app/" target="_blank" class="btn">
-                    <i class="fas fa-external-link-alt" style="margin-right:8px;"></i>CLICK HERE
-                </a>
-            </div>
-            <div class="grid-container" id="dynamicCodesGrid"></div>
-        </div>
+    let grid = [];
+    let shooterBubble = null;
+    let nextBubbleColor = 0;
+    let movingBubble = null;
+    let aimAngle = -Math.PI / 2;
+    let pointer = { x: 0, y: 0, active: false };
+    let gameState = 'MENU';
+    let score = 0;
+    let shotsFired = 0;
 
-        <div class="bottom-nav">
-            <button class="nav-btn active" id="navHome">HOME</button>
-            <button class="nav-btn" id="navCodes">CODES</button>
-        </div>
-    </div>
+    function resize() {
+        const rect = wrapper.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        BUBBLE_R = canvas.width / (COLS * 2);
+        ROW_HEIGHT = BUBBLE_R * Math.sqrt(3); 
+        if (shooterBubble && !movingBubble) {
+            shooterBubble.x = canvas.width / 2;
+            shooterBubble.y = canvas.height - BUBBLE_R * 3.5;
+        }
+    }
+    window.addEventListener('resize', resize);
 
-    <div class="modal-overlay" id="buyModal">
-        <div class="modal-card">
-            <span class="modal-close" id="closeModalBtn">&times;</span>
-            <div style="font-size:22px; font-weight:800; color:var(--primary-gold); margin-bottom:15px;">
-                <i class="fas fa-shopping-cart"></i> READY TO PURCHASE?
-            </div>
-            <p style="color:#ccc; margin:15px 0;">Contact us on Instagram to get your code or service.</p>
-            <a href="https://www.instagram.com/zcode.ai?igsh=enBsbzd0c2lyNjNu" target="_blank" class="instagram-link">
-                <i class="fab fa-instagram"></i> @zcode.ai
-            </a>
-            <p style="margin-top:20px; font-size:12px; color:#777;">Click outside or press ✕ to close</p>
-        </div>
-    </div>
-
-    <script>
-        (function() {
-            const selectionScreen = document.getElementById('selectionScreen');
-            const mainApp = document.getElementById('mainApp');
-            const homeContent = document.getElementById('homeContent');
-            const codesContent = document.getElementById('codesContent');
-            const navHome = document.getElementById('navHome');
-            const navCodes = document.getElementById('navCodes');
-            const modalOverlay = document.getElementById('buyModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-
-            const tileData = [
-                { name: "WINGO", price: 799, icon: "fa-gamepad" },
-                { name: "AVIATOR", price: 299, icon: "fa-plane" },
-                { name: "MINES", price: 299, icon: "fa-bomb" },
-                { name: "PLINKO", price: 199, icon: "fa-circle-down" },
-                { name: "ROCKET", price: 299, icon: "fa-rocket" },
-                { name: "LUDO", price: 199, icon: "fa-dice-four" },
-                { name: "CARROM", price: 199, icon: "fa-bullseye" },
-                { name: "POOL", price: 399, icon: "fa-dot-circle" },
-                { name: "CAPTCHA", price: 299, icon: "fa-keyboard" },
-                { name: "TAP COIN", price: 399, icon: "fa-hand-pointer" },
-                { name: "FLIP COIN", price: 199, icon: "fa-coins" },
-                { name: "SUITCASE", price: 199, icon: "fa-suitcase" },
-                { name: "TIC TAC TOE", price: 49, icon: "fa-times" },
-                { name: "SNAKE", price: 299, icon: "fa-staff-snake" },
-                { name: "DICE", price: 99, icon: "fa-dice" },
-                { name: "BUBBLE SHOOTER", price: 99, icon: "fa-bowling-ball" },
-                { name: "CALCULATOR", price: 49, icon: "fa-calculator" },
-                { name: "BLOCK BLAST", price: 199, icon: "fa-cubes" },
-                { name: "FF TOURNAMENT", price: 399, icon: "fa-trophy" },
-                { name: "CALANDER", price: 49, icon: "fa-calendar-alt" },
-                { name: "APP STORE", price: 199, icon: "fa-store" },
-                { name: "MUSIC APP", price: 199, icon: "fa-music" },
-                { name: "MOVIE APP", price: 199, icon: "fa-film" },
-                { name: "SPINNER", price: 49, icon: "fa-sync" },
-                { name: "FRUIT NINJA", price: 99, icon: "fa-apple-alt" },
-                { name: "WINGO 30 SEC", price: 249, icon: "fa-stopwatch" },
-                { name: "CHAT APP", price: 299, icon: "fa-comments" },
-                { name: "CHAT GPT CLONE", price: 299, icon: "fa-robot" },
-                { name: "WINGO 1 MIN", price: 249, icon: "fa-clock" },
-                { name: "WINGO 3 MIN", price: 249, icon: "fa-clock" },
-                { name: "WINGO 5 MIN", price: 249, icon: "fa-clock" }
-            ];
-
-            function renderCodesGrid() {
-                const grid = document.getElementById('dynamicCodesGrid');
-                if (!grid) return;
-                grid.innerHTML = '';
-                const processed = tileData.map(item => ({
-                    ...item,
-                    original: item.price * 2,
-                    finalPrice: item.price,
-                    discount: "50% OFF"
-                }));
-                processed.sort((a,b) => a.finalPrice - b.finalPrice);
-                processed.forEach(item => {
-                    const card = document.createElement('div');
-                    card.className = 'grid-item';
-                    card.innerHTML = `
-                        <i class="fa-solid ${item.icon} bg-icon"></i>
-                        <div class="item-name">${item.name}</div>
-                        <div class="discount-tag">${item.discount}</div>
-                        <div class="item-price"><span class="strike">₹${item.original}</span> ₹${item.finalPrice}</div>
-                        <button class="action-btn buy-trigger">BUY</button>
-                    `;
-                    grid.appendChild(card);
-                });
+    function generateGrid() {
+        grid = [];
+        for (let r = 0; r < ROWS; r++) {
+            grid[r] = new Array(r % 2 === 0 ? COLS : COLS - 1).fill(null);
+        }
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < grid[r].length; c++) {
+                let colorIdx = Math.floor(Math.random() * COLORS.length);
+                if (r > 4 && Math.random() < 0.1) colorIdx = 5; 
+                grid[r][c] = { color: colorIdx };
             }
+        }
+    }
 
-            function setActivePage(page) {
-                if (page === 'home') {
-                    homeContent.classList.remove('hidden');
-                    codesContent.classList.add('hidden');
-                    navHome.classList.add('active');
-                    navCodes.classList.remove('active');
-                } else {
-                    codesContent.classList.remove('hidden');
-                    homeContent.classList.add('hidden');
-                    navHome.classList.remove('active');
-                    navCodes.classList.add('active');
+    function initGame() {
+        resize();
+        score = 0;
+        shotsFired = 0;
+        updateScore();
+        generateGrid();
+        nextBubbleColor = getRandomAvailableColor();
+        loadShooter();
+        gameState = 'PLAYING';
+    }
+
+    function getRandomAvailableColor() {
+        let available = new Set();
+        for (let r = 0; r < ROWS; r++) {
+            if (!grid[r]) continue;
+            for (let c = 0; c < grid[r].length; c++) {
+                if (grid[r][c] && grid[r][c].color < 5) available.add(grid[r][c].color);
+            }
+        }
+        let arr = Array.from(available);
+        if (arr.length === 0) return Math.floor(Math.random() * COLORS.length);
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function loadShooter() {
+        shooterBubble = {
+            x: canvas.width / 2,
+            y: canvas.height - BUBBLE_R * 3.5,
+            color: nextBubbleColor
+        };
+        nextBubbleColor = getRandomAvailableColor();
+    }
+
+    function update() {
+        if (gameState !== 'PLAYING') return;
+        if (movingBubble) {
+            movingBubble.x += movingBubble.vx;
+            movingBubble.y += movingBubble.vy;
+            if (movingBubble.x - BUBBLE_R < 0 || movingBubble.x + BUBBLE_R > canvas.width) {
+                movingBubble.vx *= -1;
+            }
+            if (movingBubble.y - BUBBLE_R <= 0) {
+                snapBubble();
+                return;
+            }
+            for (let r = 0; r < ROWS; r++) {
+                if (!grid[r]) continue;
+                for (let c = 0; c < grid[r].length; c++) {
+                    if (grid[r][c]) {
+                        let pos = getGridPos(r, c);
+                        let dx = movingBubble.x - pos.x;
+                        let dy = movingBubble.y - pos.y;
+                        if (dx*dx + dy*dy < (BUBBLE_R * 2 * 0.9) ** 2) {
+                            snapBubble();
+                            return;
+                        }
+                    }
                 }
             }
+        }
+    }
 
-            function startApp(initialPage) {
-                selectionScreen.classList.add('hidden');
-                mainApp.classList.remove('hidden');
-                renderCodesGrid();
-                setActivePage(initialPage);
+    function snapBubble() {
+        let best = { r: 0, c: 0, dist: Infinity };
+        for (let r = 0; r < ROWS; r++) {
+            if (!grid[r]) continue;
+            for (let c = 0; c < grid[r].length; c++) {
+                if (!grid[r][c]) {
+                    let pos = getGridPos(r, c);
+                    let dist = Math.hypot(movingBubble.x - pos.x, movingBubble.y - pos.y);
+                    if (dist < best.dist) {
+                        best.dist = dist; best.r = r; best.c = c;
+                    }
+                }
             }
+        }
+        if (best.r >= ROWS - 3) { triggerGameOver(); return; }
+        grid[best.r][best.c] = { color: movingBubble.color };
+        let colorMatched = findMatches(best.r, best.c);
+        if (colorMatched.length >= 3) {
+            colorMatched.forEach(m => grid[m.r][m.c] = null);
+            score += colorMatched.length * 10;
+            findFloating().forEach(f => { grid[f.r][f.c] = null; score += 20; });
+            updateScore();
+        }
+        movingBubble = null;
+        shotsFired++;
+        if (shotsFired % 6 === 0) shiftGridDown();
+        loadShooter();
+    }
 
-            document.querySelectorAll('.go-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    startApp(this.dataset.target);
-                });
-            });
+    function shiftGridDown() {
+        grid.pop(); 
+        let newRow = new Array(COLS).fill(null);
+        for(let c=0; c<COLS; c++) newRow[c] = { color: Math.floor(Math.random() * COLORS.length) };
+        grid.unshift(newRow); 
+        for (let r = 0; r < ROWS; r++) {
+            let expected = r % 2 === 0 ? COLS : COLS - 1;
+            while(grid[r].length > expected) grid[r].pop();
+            while(grid[r].length < expected) grid[r].push(null);
+        }
+    }
 
-            navHome.addEventListener('click', () => setActivePage('home'));
-            navCodes.addEventListener('click', () => setActivePage('codes'));
+    function getNeighbors(r, c) {
+        let list =[];
+        const isOdd = r % 2 !== 0;
+        const dirs = isOdd ? [[0,-1],[0,1],[-1,0],[-1,1],[1,0],[1,1]] : [[0,-1],[0,1],[-1,-1],[-1,0],[1,-1],[1,0]];
+        dirs.forEach(d => {
+            let nr = r + d[0], nc = c + d[1];
+            if (nr >= 0 && nr < ROWS && grid[nr] && nc >= 0 && nc < grid[nr].length) list.push({r: nr, c: nc});
+        });
+        return list;
+    }
 
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.buy-trigger')) {
-                    e.preventDefault();
-                    modalOverlay.style.display = 'flex';
+    function findMatches(startR, startC) {
+        let targetColor = grid[startR][startC].color;
+        let q = [{r: startR, c: startC}], matched =[], visited = new Set();
+        visited.add(`${startR},${startC}`);
+        while (q.length > 0) {
+            let curr = q.shift(); matched.push(curr);
+            getNeighbors(curr.r, curr.c).forEach(n => {
+                if (!visited.has(`${n.r},${n.c}`) && grid[n.r][n.c] && grid[n.r][n.c].color === targetColor) {
+                    visited.add(`${n.r},${n.c}`); q.push(n);
                 }
             });
+        }
+        return matched;
+    }
 
-            closeModalBtn.addEventListener('click', () => modalOverlay.style.display = 'none');
-            modalOverlay.addEventListener('click', function(e) {
-                if (e.target === modalOverlay) modalOverlay.style.display = 'none';
+    function findFloating() {
+        let connected = new Set(), q = [];
+        for (let c = 0; c < grid[0].length; c++) if (grid[0][c]) { connected.add(`0,${c}`); q.push({r: 0, c: c}); }
+        while (q.length > 0) {
+            let curr = q.shift();
+            getNeighbors(curr.r, curr.c).forEach(n => {
+                if (!connected.has(`${n.r},${n.c}`) && grid[n.r][n.c]) { connected.add(`${n.r},${n.c}`); q.push(n); }
             });
-            window.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && modalOverlay.style.display === 'flex') {
-                    modalOverlay.style.display = 'none';
-                }
-            });
+        }
+        let floating =[];
+        for (let r = 0; r < ROWS; r++) for (let c = 0; c < grid[r].length; c++) if (grid[r][c] && !connected.has(`${r},${c}`)) floating.push({r, c});
+        return floating;
+    }
 
-            const link = document.createElement('link'); link.rel = 'preconnect'; link.href = 'https://fonts.googleapis.com'; document.head.appendChild(link);
-            const link2 = document.createElement('link'); link2.rel = 'preconnect'; link2.href = 'https://fonts.gstatic.com'; link2.crossOrigin = ''; document.head.appendChild(link2);
-        })();
-    </script>
+    function getGridPos(r, c) {
+        let xOffset = r % 2 === 0 ? BUBBLE_R : BUBBLE_R * 2;
+        return { x: c * (BUBBLE_R * 2) + xOffset, y: r * ROW_HEIGHT + BUBBLE_R };
+    }
+
+    function updateAim(clientX, clientY) {
+        const rect = canvas.getBoundingClientRect();
+        let dx = clientX - rect.left - (canvas.width / 2);
+        let dy = clientY - rect.top - (canvas.height - BUBBLE_R * 3.5);
+        aimAngle = Math.atan2(dy, dx);
+        if (aimAngle > -0.2) aimAngle = -0.2;
+        if (aimAngle < -Math.PI + 0.2) aimAngle = -Math.PI + 0.2;
+        pointer.active = true;
+    }
+
+    canvas.addEventListener('mousemove', e => updateAim(e.clientX, e.clientY));
+    canvas.addEventListener('mousedown', fire);
+    canvas.addEventListener('touchstart', e => { updateAim(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }, {passive: false});
+    canvas.addEventListener('touchend', e => { fire(); e.preventDefault(); }, {passive: false});
+
+    function fire() { if (gameState === 'PLAYING' && !movingBubble) { 
+        let s = canvas.height * 0.03; 
+        movingBubble = {...shooterBubble, vx: Math.cos(aimAngle)*s, vy: Math.sin(aimAngle)*s}; 
+        shooterBubble = null; 
+    }}
+
+    function draw() {
+        update();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Background
+        let bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        bgGrad.addColorStop(0, '#00b4db'); bgGrad.addColorStop(1, '#ffffff');
+        ctx.fillStyle = bgGrad; ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        // Curves
+        ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 6; ctx.beginPath();
+        ctx.moveTo(0, canvas.height - 180); ctx.quadraticCurveTo(canvas.width/2, canvas.height-80, canvas.width, canvas.height-180); ctx.stroke();
+
+        // Bubbles
+        for (let r = 0; r < ROWS; r++) for (let c = 0; c < grid[r].length; c++) if (grid[r][c]) {
+            let p = getGridPos(r,c); drawBeautifulBubble(p.x, p.y, BUBBLE_R, grid[r][c].color);
+        }
+
+        // Launcher Structure
+        drawLauncher();
+
+        if (movingBubble) drawBeautifulBubble(movingBubble.x, movingBubble.y, BUBBLE_R, movingBubble.color);
+        if (shooterBubble) drawBeautifulBubble(shooterBubble.x, shooterBubble.y, BUBBLE_R, shooterBubble.color);
+        
+        // Next Bubble Slot
+        drawBeautifulBubble(BUBBLE_R*2, canvas.height - BUBBLE_R*2, BUBBLE_R*0.7, nextBubbleColor);
+
+        requestAnimationFrame(draw);
+    }
+
+    function drawLauncher() {
+        const lx = canvas.width / 2;
+        const ly = canvas.height - BUBBLE_R * 3.5;
+
+        ctx.save();
+        ctx.translate(lx, ly);
+        ctx.rotate(aimAngle + Math.PI/2);
+
+        // Barrel
+        let barrelGrad = ctx.createLinearGradient(-BUBBLE_R, 0, BUBBLE_R, 0);
+        barrelGrad.addColorStop(0, '#555'); barrelGrad.addColorStop(0.5, '#888'); barrelGrad.addColorStop(1, '#555');
+        ctx.fillStyle = barrelGrad;
+        ctx.beginPath();
+        ctx.roundRect(-BUBBLE_R * 1.2, -BUBBLE_R, BUBBLE_R * 2.4, BUBBLE_R * 3, 10);
+        ctx.fill();
+        ctx.strokeStyle = '#333'; ctx.lineWidth = 2; ctx.stroke();
+
+        ctx.restore();
+
+        // Fixed Base
+        ctx.fillStyle = '#444';
+        ctx.beginPath();
+        ctx.arc(lx, ly + BUBBLE_R, BUBBLE_R * 2, Math.PI, 0);
+        ctx.fill();
+        ctx.strokeStyle = '#222'; ctx.stroke();
+    }
+
+    function drawBeautifulBubble(x, y, r, colorIdx) {
+        let renderR = r * 0.95;
+        let baseColor = colorIdx >= 5 ? STONE_COLOR : COLORS[colorIdx];
+        ctx.beginPath(); ctx.arc(x, y, renderR, 0, Math.PI*2); ctx.fillStyle = baseColor; ctx.fill();
+        
+        let innerGrad = ctx.createRadialGradient(x, y, renderR * 0.2, x, y, renderR);
+        innerGrad.addColorStop(0, 'rgba(255,255,255,0.2)'); innerGrad.addColorStop(1, 'rgba(0,0,0,0.3)');
+        ctx.fillStyle = innerGrad; ctx.fill();
+
+        ctx.beginPath(); ctx.arc(x - renderR*0.3, y - renderR*0.3, renderR*0.2, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.fill();
+    }
+
+    window.startGame = function() { startMenu.classList.add('hidden'); gameoverMenu.classList.add('hidden'); hud.classList.remove('hidden'); initGame(); }
+    function triggerGameOver() { gameState = 'GAMEOVER'; hud.classList.add('hidden'); finalScoreEl.innerText = "SCORE: " + score; gameoverMenu.classList.remove('hidden'); }
+    function updateScore() { scoreDisplay.innerText = score; }
+    function hexToRgba(hex, alpha) { let r = parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16); return `rgba(${r},${g},${b},${alpha})`; }
+
+    generateGrid(); resize(); draw();
+</script>
 </body>
 </html>
